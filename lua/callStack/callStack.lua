@@ -3,7 +3,8 @@ local function openWindow()
   local max_depth = 9
 
 
-  local back = "" 
+  local back = ""
+  local at_max_depth = false
 
   for i=0, max_depth, 1 do
     local dirs = io.popen("dir -d .git", "r")
@@ -23,6 +24,9 @@ local function openWindow()
 
   end
 
+  if (at_max_depth) then
+    back = ""
+  end
   BufferHandle = vim.fn.bufadd('./' .. back .. 'callStack.md')
 
   WindowHandle = vim.api.nvim_open_win(BufferHandle, true,
