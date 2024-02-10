@@ -1,11 +1,4 @@
 local function openWindow()
-
-  local currentPath = vim.api.nvim_call_function('expand', {"%:p"})
-
-  local found = vim.api.nvim_call_function('finddir',{'.git', currentPath})
-
-  BufferHandle = vim.fn.bufadd('./' .. found .. 'callStack.md')
-
   WindowHandle = vim.api.nvim_open_win(BufferHandle, true,
     {relative="win", row=5, col=45, width=100, height=30})
 end
@@ -17,6 +10,6 @@ end
 vim.keymap.set("n", "m", function ()
   openWindow()
 end)
-vim.keymap.set("n", "mn",function ()
+vim.keymap.set("n", "<C-m>",function ()
   closeWindow()
 end )
