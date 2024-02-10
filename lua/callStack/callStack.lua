@@ -1,37 +1,13 @@
 local function openWindow()
 
-  local max_depth = 9
+  local currentPath = vim.api.nvim_call_function('expand', {"%:p"})
 
+  local found = vim.api.nvim_call_function('finddir',{'.git', currentPath})
 
-  local back = ""
-  local at_max_depth = false
-
-  for i=0, max_depth, 1 do
-    local dirs = io.popen("dir -d .git", "r")
-
-    if dirs then
-
-      local output = dirs:read("a")
-
-      dirs:close()
-
-      if output == "" then
-        back = back .. "../"
-      else
-        break
-      end
-    end
-
-  end
-
-  if (at_max_depth) then
-    back = ""
-  end
-  BufferHandle = vim.fn.bufadd('./' .. back .. 'callStack.md')
+  BufferHandle = vim.fn.bufadd('./' .. found .. 'callStack.md')
 
   WindowHandle = vim.api.nvim_open_win(BufferHandle, true,
     {relative="win", row=5, col=45, width=100, height=30})
-
 end
 
 local function closeWindow ()

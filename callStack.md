@@ -1,3 +1,3 @@
 # Call Stack
 
-hello ski
+- openWindow funktionen er meget langsom.
