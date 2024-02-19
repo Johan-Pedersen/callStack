@@ -9,3 +9,4 @@
 - mulighed for at åbne thoughts uden at skulle igennem CS
 - Hvis man åbner CS fra thoughts, skal thoughts lukkes først.
   - Lav en form for swap metode mellem CS og thoughts.
+- thoughts skal åbnes i bunden af filen.
