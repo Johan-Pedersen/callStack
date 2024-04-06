@@ -7,13 +7,13 @@ Windows = {}
 local winFuncs = require("callStack.winFuncs")
 --
 --Set keymap -----------------------
-vim.keymap.set("n", "m", function ()
-  winFuncs.openWindow()
+vim.keymap.set("n", "<leader>m", function ()
+  winFuncs.openWindow(CSBuf)
 end)
-vim.keymap.set("n", "<C-m>",function ()
+vim.keymap.set("n", "m",function ()
   winFuncs.closeWindow()
-end )
+end)
 
-vim.keymap.set("n", "<C-j>", function()
-  winFuncs.follow()
+vim.keymap.set("n", "<leader>j", function()
+  winFuncs.openWindow(ThoughtsBuf)
 end)
