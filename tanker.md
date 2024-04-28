@@ -15,3 +15,4 @@
   - Hvis nej, laver vi bare callstack.md i currentdir
   - Hvis ja, så skal vi have den path, lav en add buffer til den path 
   - Hvordan finder man den path 
+hello

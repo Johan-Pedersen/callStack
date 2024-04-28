@@ -1,7 +1,7 @@
 local M = {}
 
 function M.openWindow(buf)
-  M.closeWindow()
+  M.loseWindow()
   local windowHandle = vim.api.nvim_open_win(buf, true,
     {relative="win", row=5, col=45, width=100, height=30})
 

@@ -5,15 +5,22 @@ ThoughtsBuf = vim.fn.bufadd(rootDir..'/Thoughts.md')
 Windows = {}
 
 local winFuncs = require("callStack.winFuncs")
+local linking = require("callStack.linking")
+
+linking.NewHeader();
 --
 --Set keymap -----------------------
-vim.keymap.set("n", "<leader>m", function ()
+vim.keymap.set("n", "]c", function ()
   winFuncs.openWindow(CSBuf)
 end)
-vim.keymap.set("n", "m",function ()
+vim.keymap.set("n", "[c",function ()
   winFuncs.closeWindow()
 end)
 
-vim.keymap.set("n", "<leader>j", function()
+vim.keymap.set("n", "]t", function()
   winFuncs.openWindow(ThoughtsBuf)
+end)
+
+vim.keymap.set("n", "'m", function()
+  linking.NewHeader()
 end)
