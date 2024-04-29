@@ -1,6 +1,6 @@
 local M = {}
 
---make link from CallStack to Thoughts
+--make link from CallStack to Thoughnvim_buf_get_lines)s
 -- Create new header in Thoughts.md an link to it
 -- Should be called from the current line in the CallStack
 
