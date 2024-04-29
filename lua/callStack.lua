@@ -20,10 +20,10 @@ vim.keymap.set("n", "]t", function()
   winFuncs.openWindow(ThoughtsBuf)
 end)
 
-vim.keymap.set("n", "]h", function()
+vim.keymap.set("n", "nh", function()
   linking.NewHeader()
 end)
 
-vim.keymap.set("n", "]H", function()
+vim.keymap.set("n", "]h", function()
   linking.GoToHeader()
 end)
