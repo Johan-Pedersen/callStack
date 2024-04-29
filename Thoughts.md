@@ -24,3 +24,5 @@ hej
 ## hello
 ## hello
 ## hello2
+## :help search()
+## Link til ny header 
