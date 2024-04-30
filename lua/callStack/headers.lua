@@ -10,7 +10,8 @@ local cmd = vim.api.nvim_command
 
 local tabSize = vim.api.nvim_buf_get_option(0, "tabstop")
 
-function M.NewHeader()
+local function getTabsAndText()
+
   local curLine = call("getline", {"."})
 
   local i, j = string.find(curLine, "- ")
@@ -21,12 +22,22 @@ function M.NewHeader()
 
     local spaces = string.sub(curLine, 1,i-1)
 
-    local tabNr = #spaces/tabSize
+    local tabs = #spaces/tabSize
+
+    return tabs, title
+  end
+end
+
+function M.NewHeader()
+
+  local tabs, title = getTabsAndText()
+
+  if tabs and title then
 
     --Header symbols
     local hSyms = "\\#\\#"
 
-    hSyms = hSyms..string.rep("\\#", tabNr)
+    hSyms = hSyms..string.rep("\\#", tabs)
 
     cmd("silent! !echo \""..hSyms..title.."\" >> Thoughts.md" )
 
@@ -34,23 +45,15 @@ function M.NewHeader()
   end
 end
 
+
 function M.GoToHeader()
-  local curLine = call("getline", {"."})
 
-  local i, j = string.find(curLine, "- ")
+  local tabs, title = getTabsAndText()
 
-  if i and j then
-
-    local title = string.sub(curLine, j)
-
-    local spaces = string.sub(curLine, 1,i-1)
-
-    local tabNr = #spaces/tabSize
-
+  if tabs and title then
     --Header symbols
     local hSyms = "##"
-
-    hSyms = hSyms..string.rep("#", tabNr)
+    hSyms = hSyms..string.rep("#", tabs)
 
     local header = hSyms.."\\"..title
     winFuncs.openWindow(ThoughtsBuf)
@@ -58,8 +61,5 @@ function M.GoToHeader()
 
     cmd(""..match)
   end
-
 end
-
-
 return M
