@@ -1,10 +1,9 @@
 # Call Stack
 
-- :help search()
-    - Hvordan bestemmer man filen der søges i
-- Link til ny header 
-- Måske se hvordan han har gjort det med links
-    - https://github.com/jghauser/follow-md-links.nvim
-
-
+- Refactor
+- Delete the corresponding thoughts entry when popping from the callstack 
+    - Maybe cmd to do this, so you don't have to delete every time
+- Implement push/pop-methods
+- Custom keymap
+- Styling options
 
