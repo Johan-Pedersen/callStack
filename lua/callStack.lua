@@ -1,34 +1,58 @@
 local rootDir = vim.fn.finddir(".git/..", vim.fn.getcwd())
-CSBuf = vim.fn.bufadd(rootDir..'/callStack.md')
-ThoughtsBuf = vim.fn.bufadd(rootDir..'/Thoughts.md')
 
-vim.fn.bufload(CSBuf)
-CSBufLines = vim.api.nvim_buf_get_lines(CSBuf, 0, -1, false)
-
-if CSBufLines[1] == "" then
-  vim.fn.appendbufline(rootDir..'/callStack.md', 0, "# Callstack")
+if (rootDir == "") then
+  rootDir = "."
 end
 
-vim.fn.bufload(ThoughtsBuf)
-ThoughtsBufLines = vim.api.nvim_buf_get_lines(ThoughtsBuf, 0, -1, false)
+local docsPath = rootDir.."/docs"
 
-if ThoughtsBufLines[1] == "" then
-  vim.fn.appendbufline(rootDir..'/Thoughts.md', 0, "# Thoughts")
+os.execute("mkdir -p "..docsPath)
+
+CSBuf = vim.fn.bufadd(docsPath..'/callStack.md')
+
+ThoughtsBuf = vim.fn.bufadd(docsPath..'/Thoughts.md')
+
+local function writeBuf(buf)
+  vim.api.nvim_buf_call(buf, function()
+    vim.cmd(':write')
+  end)
 end
 
-Windows = {}
 local winFuncs = require("callStack.winFuncs")
 local headers = require("callStack.headers")
 
 --Set keymap -----------------------
-vim.keymap.set("n", "]c", function ()
+--
+--Open CallStack
+vim.keymap.set("n", "[c", function ()
+
+Windows = {}
+  vim.fn.bufload(CSBuf)
+  CSBufLines = vim.api.nvim_buf_get_lines(CSBuf, 0, -1, false)
+
+  if CSBufLines[1] == "" then
+    vim.fn.appendbufline(docsPath..'/callStack.md', 0, "# Callstack")
+  end
+
+  writeBuf(CSBuf)
+
   winFuncs.openWindow(CSBuf)
 end)
-vim.keymap.set("n", "[c",function ()
+--Close Window
+vim.keymap.set("n", "]c",function ()
   winFuncs.closeWindow()
 end)
 
-vim.keymap.set("n", "]t", function()
+-- Open Thoughts
+vim.keymap.set("n", "[t", function()
+  vim.fn.bufload(ThoughtsBuf)
+
+  ThoughtsBufLines = vim.api.nvim_buf_get_lines(ThoughtsBuf, 0, -1, false)
+
+  if ThoughtsBufLines[1] == "" then
+    vim.fn.appendbufline(docsPath..'/Thoughts.md', 0, "# Thoughts")
+  end
+  writeBuf(ThoughtsBuf)
   winFuncs.openWindow(ThoughtsBuf)
 end)
 
@@ -36,6 +60,7 @@ vim.keymap.set("n", "nh", function()
   headers.NewHeader()
 end)
 
-vim.keymap.set("n", "]h", function()
+-- Open header/ go to header
+vim.keymap.set("n", "[h", function()
   headers.GoToHeader()
 end)
