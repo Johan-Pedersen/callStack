@@ -9,7 +9,8 @@ function M.openWindow(buf)
 end
 
 function M.closeWindow ()
-  if (Windows ~= nil ) then
+
+  if (Windows ~= nil and next(Windows) ~= nil ) then
     local current_winID = vim.api.nvim_call_function("win_getid", {})
     for i,winID in ipairs(Windows) do
 
