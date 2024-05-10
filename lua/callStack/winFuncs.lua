@@ -9,13 +9,15 @@ function M.openWindow(buf)
 end
 
 function M.closeWindow ()
-  local current_winID = vim.api.nvim_call_function("win_getid", {})
-  for i,winID in ipairs(Windows) do
+  if (Windows ~= nil ) then
+    local current_winID = vim.api.nvim_call_function("win_getid", {})
+    for i,winID in ipairs(Windows) do
 
-    if (winID == current_winID) then
-      vim.cmd.write()
-      vim.api.nvim_win_hide(winID)
-      table.remove(Windows, i)
+      if (winID == current_winID) then
+        vim.cmd.write()
+        vim.api.nvim_win_hide(winID)
+        table.remove(Windows, i)
+      end
     end
 
   end
