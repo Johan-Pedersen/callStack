@@ -12,6 +12,8 @@ CSBuf = vim.fn.bufadd(docsPath..'/callStack.md')
 
 ThoughtsBuf = vim.fn.bufadd(docsPath..'/Thoughts.md')
 
+Windows = {}
+
 local function writeBuf(buf)
   vim.api.nvim_buf_call(buf, function()
     vim.cmd(':write')
@@ -26,7 +28,6 @@ local headers = require("callStack.headers")
 --Open CallStack
 vim.keymap.set("n", "[c", function ()
 
-Windows = {}
   vim.fn.bufload(CSBuf)
   CSBufLines = vim.api.nvim_buf_get_lines(CSBuf, 0, -1, false)
 
