@@ -10,6 +10,8 @@ local cmd = vim.api.nvim_command
 
 local tabSize = vim.api.nvim_buf_get_option(0, "tabstop")
 
+print("tabSize ",tabSize )
+
 function M.NewHeader()
   local curLine = call("getline", {"."})
 
@@ -28,7 +30,7 @@ function M.NewHeader()
 
     hSyms = hSyms..string.rep("\\#", tabNr)
 
-    cmd("silent! !echo \""..hSyms..title.."\" >> Thoughts.md" )
+    cmd("silent! !echo \""..hSyms..title.."\" >>".. DocsPath.."/".."Thoughts.md" )
 
     M.GoToHeader()
   end

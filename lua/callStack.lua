@@ -4,13 +4,13 @@ if (rootDir == "") then
   rootDir = "."
 end
 
-local docsPath = rootDir.."/docs"
+DocsPath = rootDir.."/docs"
 
-os.execute("mkdir -p "..docsPath)
+os.execute("mkdir -p "..DocsPath)
 
-CSBuf = vim.fn.bufadd(docsPath..'/callStack.md')
+CSBuf = vim.fn.bufadd(DocsPath..'/callStack.md')
 
-ThoughtsBuf = vim.fn.bufadd(docsPath..'/Thoughts.md')
+ThoughtsBuf = vim.fn.bufadd(DocsPath..'/Thoughts.md')
 
 Windows = {}
 
@@ -32,7 +32,7 @@ vim.keymap.set("n", "[c", function ()
   CSBufLines = vim.api.nvim_buf_get_lines(CSBuf, 0, -1, false)
 
   if CSBufLines[1] == "" then
-    vim.fn.appendbufline(docsPath..'/callStack.md', 0, "# Callstack")
+    vim.fn.appendbufline(DocsPath..'/callStack.md', 0, "# Callstack")
   end
 
   writeBuf(CSBuf)
@@ -51,7 +51,7 @@ vim.keymap.set("n", "[t", function()
   ThoughtsBufLines = vim.api.nvim_buf_get_lines(ThoughtsBuf, 0, -1, false)
 
   if ThoughtsBufLines[1] == "" then
-    vim.fn.appendbufline(docsPath..'/Thoughts.md', 0, "# Thoughts")
+    vim.fn.appendbufline(DocsPath..'/Thoughts.md', 0, "# Thoughts")
   end
   writeBuf(ThoughtsBuf)
   winFuncs.openWindow(ThoughtsBuf)
