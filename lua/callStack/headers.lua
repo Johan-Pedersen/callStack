@@ -10,7 +10,32 @@ local cmd = vim.api.nvim_command
 
 local tabSize = vim.api.nvim_buf_get_option(0, "tabstop")
 
-print("tabSize ",tabSize )
+local function mkHeader()
+
+  local curLine = call("getline", {"."})
+
+  local i, j = string.find(curLine, "- ")
+
+  if i and j then
+
+    local title = string.sub(curLine, j)
+
+    local spaces = string.sub(curLine, 1,i-1)
+
+    local tabNr = #spaces/tabSize
+
+    --Header symbols
+    local hSyms = "##"
+
+    hSyms = hSyms..string.rep("#", tabNr)
+
+    local header = hSyms.."\\"..title
+
+    return header
+  else
+    error("Current line not starting with -")
+  end
+end
 
 function M.NewHeader()
   local curLine = call("getline", {"."})
@@ -37,30 +62,11 @@ function M.NewHeader()
 end
 
 function M.GoToHeader()
-  local curLine = call("getline", {"."})
+  local header = mkHeader()
+  winFuncs.openWindow(ThoughtsBuf)
+  local match = vim.fn.search(header)
 
-  local i, j = string.find(curLine, "- ")
-
-  if i and j then
-
-    local title = string.sub(curLine, j)
-
-    local spaces = string.sub(curLine, 1,i-1)
-
-    local tabNr = #spaces/tabSize
-
-    --Header symbols
-    local hSyms = "##"
-
-    hSyms = hSyms..string.rep("#", tabNr)
-
-    local header = hSyms.."\\"..title
-    winFuncs.openWindow(ThoughtsBuf)
-    local match = vim.fn.search(header)
-
-    cmd(""..match)
-  end
-
+  cmd(""..match)
 end
 
 
