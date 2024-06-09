@@ -29,7 +29,7 @@ local function mkHeader()
 
     hSyms = hSyms..string.rep("#", tabNr)
 
-    local header = hSyms.."\\"..title
+    local header = hSyms..title
 
     return header
   else
@@ -37,32 +37,27 @@ local function mkHeader()
   end
 end
 
-function M.NewHeader()
-  local curLine = call("getline", {"."})
+local function apndThoughts(newHeader)
+  file,err = io.open(DocsPath.."/".."Thoughts.md","a")
 
-  local i, j = string.find(curLine, "- ")
-
-  if i and j then
-
-    local title = string.sub(curLine, j)
-
-    local spaces = string.sub(curLine, 1,i-1)
-
-    local tabNr = #spaces/tabSize
-
-    --Header symbols
-    local hSyms = "\\#\\#"
-
-    hSyms = hSyms..string.rep("\\#", tabNr)
-
-    cmd("silent! !echo \""..hSyms..title.."\" >>".. DocsPath.."/".."Thoughts.md" )
-
-    M.GoToHeader()
+  if not err then
+    file:write(newHeader)
+    file:close()
   end
 end
 
-function M.GoToHeader()
+function M.NewHeader()
+
+  --Fungere ikke, kan vare det er nodvendigt at escape
   local header = mkHeader()
+
+  apndThoughts(header)
+  M.GoToCurHeader()
+end
+
+function M.GoToCurHeader()
+  local header = mkHeader()
+  print("GoToHeader header", header)
   winFuncs.openWindow(ThoughtsBuf)
   local match = vim.fn.search(header)
 

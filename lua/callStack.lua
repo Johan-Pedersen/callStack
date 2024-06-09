@@ -63,5 +63,5 @@ end)
 
 -- Open header/ go to header
 vim.keymap.set("n", "[h", function()
-  headers.GoToHeader()
+  headers.GoToCurHeader()
 end)
