@@ -1,9 +1,5 @@
 local M = {}
 
---make link from CallStack to Thoughnvim_buf_get_lines)s
--- Create new header in Thoughts.md an link to it
--- Should be called from the current line in the CallStack
-
 local winFuncs = require("callStack.winFuncs")
 local call = vim.api.nvim_call_function
 local cmd = vim.api.nvim_command
@@ -38,30 +34,36 @@ local function mkHeader()
 end
 
 local function apndThoughts(newHeader)
-  file,err = io.open(DocsPath.."/".."Thoughts.md","a")
+  local file = io.open(DocsPath.."/".."Thoughts.md","a")
 
-  if not err then
+  if file then
     file:write(newHeader)
+    file:flush()
     file:close()
   end
 end
 
+local function findHeader(header)
+  winFuncs.openWindow(ThoughtsBuf)
+  local match = vim.fn.search(header)
+  return match
+end
+
 function M.NewHeader()
 
-  --Fungere ikke, kan vare det er nodvendigt at escape
   local header = mkHeader()
 
-  apndThoughts(header)
-  M.GoToCurHeader()
+  local match = findHeader(header)
+  if match == 0 then
+    apndThoughts(header)
+    cmd("e")
+  end
 end
 
 function M.GoToCurHeader()
   local header = mkHeader()
-  print("GoToHeader header", header)
-  winFuncs.openWindow(ThoughtsBuf)
-  local match = vim.fn.search(header)
 
-  cmd(""..match)
+  findHeader(header)
 end
 
 
