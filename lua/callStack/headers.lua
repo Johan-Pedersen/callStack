@@ -54,7 +54,6 @@ function M.ToHeader()
   local header = mkHeader()
 
   local match = findHeader(header)
-  print("match", match)
   if match == 0 then
     apndThoughts(header)
     cmd("e")
