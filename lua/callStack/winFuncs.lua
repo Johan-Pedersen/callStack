@@ -3,7 +3,7 @@ local M = {}
 function M.openWindow(buf)
   M.closeWindow()
   local windowHandle = vim.api.nvim_open_win(buf, true,
-    {relative="win", row=5, col=45, width=100, height=30})
+    {relative="editor", row=5, col=45, width=100, height=30})
 
   table.insert(Windows, windowHandle)
 end
