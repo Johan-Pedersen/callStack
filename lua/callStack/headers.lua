@@ -51,14 +51,15 @@ end
 
 function M.ToHeader()
 
-  local header = mkHeader()
-
-  local match = findHeader(header)
-  if match == 0 then
-    apndThoughts(header)
-    cmd("e")
-    --Jump to header
-    findHeader(header)
+  if CSBuf == vim.api.nvim_get_current_buf() then
+    local header = mkHeader()
+    local match = findHeader(header)
+    if match == 0 then
+      apndThoughts(header)
+      cmd("e")
+      --Jump to header
+      findHeader(header)
+    end
   end
 end
 
