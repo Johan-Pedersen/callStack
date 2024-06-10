@@ -20,6 +20,22 @@ local function writeBuf(buf)
   end)
 end
 
+vim.fn.bufload(CSBuf)
+CSBufLines = vim.api.nvim_buf_get_lines(CSBuf, 0, -1, false)
+
+if CSBufLines[1] == "" then
+  vim.fn.appendbufline(DocsPath..'/callStack.md', 0, "# Callstack")
+  writeBuf(CSBuf)
+end
+
+vim.fn.bufload(ThoughtsBuf)
+ThoughtsBufLines = vim.api.nvim_buf_get_lines(ThoughtsBuf, 0, -1, false)
+
+if ThoughtsBufLines[1] == "" then
+  vim.fn.appendbufline(DocsPath..'/Thoughts.md', 0, "# Thoughts")
+  writeBuf(ThoughtsBuf)
+end
+
 local winFuncs = require("callStack.winFuncs")
 local headers = require("callStack.headers")
 
@@ -28,12 +44,6 @@ local headers = require("callStack.headers")
 --Open CallStack
 vim.keymap.set("n", "[c", function ()
 
-  vim.fn.bufload(CSBuf)
-  CSBufLines = vim.api.nvim_buf_get_lines(CSBuf, 0, -1, false)
-
-  if CSBufLines[1] == "" then
-    vim.fn.appendbufline(DocsPath..'/callStack.md', 0, "# Callstack")
-  end
 
   writeBuf(CSBuf)
 
@@ -46,22 +56,11 @@ end)
 
 -- Open Thoughts
 vim.keymap.set("n", "[t", function()
-  vim.fn.bufload(ThoughtsBuf)
-
-  ThoughtsBufLines = vim.api.nvim_buf_get_lines(ThoughtsBuf, 0, -1, false)
-
-  if ThoughtsBufLines[1] == "" then
-    vim.fn.appendbufline(DocsPath..'/Thoughts.md', 0, "# Thoughts")
-  end
   writeBuf(ThoughtsBuf)
   winFuncs.openWindow(ThoughtsBuf)
 end)
 
-vim.keymap.set("n", "nh", function()
-  headers.NewHeader()
-end)
-
--- Open header/ go to header
-vim.keymap.set("n", "[h", function()
-  headers.GoToCurHeader()
+-- 'To header' -> Go to header and create if it doesnt exist
+vim.keymap.set("n", "th", function()
+  headers.ToHeader()
 end)

@@ -49,22 +49,18 @@ local function findHeader(header)
   return match
 end
 
-function M.NewHeader()
+function M.ToHeader()
 
   local header = mkHeader()
 
   local match = findHeader(header)
+  print("match", match)
   if match == 0 then
     apndThoughts(header)
     cmd("e")
+    --Jump to header
+    findHeader(header)
   end
 end
-
-function M.GoToCurHeader()
-  local header = mkHeader()
-
-  findHeader(header)
-end
-
 
 return M
