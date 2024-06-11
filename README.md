@@ -22,14 +22,9 @@ vim.keymap.set("n", "]t", function()
   winFuncs.openWindow(ThoughtsBuf) --Open Thoughts window
 end)
 
-vim.keymap.set("n", "nh", function()
-  headers.NewHeader() -- Make new header for stack element
+vim.keymap.set("n", "th", function()
+  headers.ToHeader() -- Make new header for stack element and jump to it
 end)
-
-vim.keymap.set("n", "]h", function()
-  headers.GoToHeader() -- Go to header under cursor
-end)
-
 ```
 
 
