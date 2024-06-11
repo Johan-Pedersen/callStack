@@ -15,3 +15,12 @@
 
 - Sker det paa andre tidspunkter
     - Nej
+
+## nh funktionen skal foerst kalde find header og hvis ikke den kan finde den, skal der laves en ny header
+
+- Saa skal man vaere sikker paa at find header faktisk fungere  
+    - Man kan godt skrive til thoughts uden ##, men hvis man har dem, saa kan det vaere et special char i bash?
+    - Det er self en comment
+
+- Naar man skal skrive til Thoughts, saa sker det med bash og der skal '#' escapes.
+- Men naar man bruger find, goer vi det med en vim function. Og der skal '#' ikke escapes.
