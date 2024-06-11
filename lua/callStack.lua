@@ -1,41 +1,63 @@
 local rootDir = vim.fn.finddir(".git/..", vim.fn.getcwd())
-CSBuf = vim.fn.bufadd(rootDir..'/callStack.md')
-ThoughtsBuf = vim.fn.bufadd(rootDir..'/Thoughts.md')
+local fNameCS = "CallStack"
+local fNameThoughts = "Thoughts"
 
-vim.fn.bufload(CSBuf)
-CSBufLines = vim.api.nvim_buf_get_lines(CSBuf, 0, -1, false)
-
-if CSBufLines[1] == "" then
-  vim.fn.appendbufline(rootDir..'/callStack.md', 0, "# Callstack")
+if (rootDir == "") then
+  rootDir = "."
 end
 
-vim.fn.bufload(ThoughtsBuf)
-ThoughtsBufLines = vim.api.nvim_buf_get_lines(ThoughtsBuf, 0, -1, false)
+DocsPath = rootDir.."/docs"
 
-if ThoughtsBufLines[1] == "" then
-  vim.fn.appendbufline(rootDir..'/Thoughts.md', 0, "# Thoughts")
-end
+os.execute("mkdir -p "..DocsPath)
+
+CSBuf = vim.fn.bufadd(DocsPath..'/'..fNameCS..'.md')
+
+ThoughtsBuf = vim.fn.bufadd(DocsPath..'/'..fNameThoughts..'.md')
 
 Windows = {}
+
+local function writeBuf(buf)
+  vim.api.nvim_buf_call(buf, function()
+    vim.cmd(':write')
+  end)
+end
+
+
+local function writeTitle(buf, name)
+  vim.fn.bufload(buf)
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+
+  if lines[1] == "" then
+    print(DocsPath..'/'..name..'.md')
+    vim.fn.appendbufline(DocsPath..'/'..name..'.md', 0, "# "..name)
+    writeBuf(buf)
+  end
+end
+
 local winFuncs = require("callStack.winFuncs")
 local headers = require("callStack.headers")
 
 --Set keymap -----------------------
-vim.keymap.set("n", "]c", function ()
+--
+--Open CallStack
+vim.keymap.set("n", "[c", function ()
+
+  writeTitle(CSBuf, fNameCS)
   winFuncs.openWindow(CSBuf)
 end)
-vim.keymap.set("n", "[c",function ()
+--Close Window
+vim.keymap.set("n", "]c",function ()
   winFuncs.closeWindow()
 end)
 
-vim.keymap.set("n", "]t", function()
+-- Open Thoughts
+vim.keymap.set("n", "[t", function()
+  writeTitle(ThoughtsBuf, fNameThoughts)
   winFuncs.openWindow(ThoughtsBuf)
 end)
 
-vim.keymap.set("n", "nh", function()
-  headers.NewHeader()
-end)
-
-vim.keymap.set("n", "]h", function()
-  headers.GoToHeader()
+-- 'To header' -> Go to header and create if it doesnt exist
+vim.keymap.set("n", "th", function()
+  writeTitle(ThoughtsBuf, fNameThoughts)
+  headers.ToHeader()
 end)

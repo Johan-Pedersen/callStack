@@ -1,16 +1,12 @@
 local M = {}
 
---make link from CallStack to Thoughnvim_buf_get_lines)s
--- Create new header in Thoughts.md an link to it
--- Should be called from the current line in the CallStack
-
 local winFuncs = require("callStack.winFuncs")
 local call = vim.api.nvim_call_function
 local cmd = vim.api.nvim_command
 
 local tabSize = vim.api.nvim_buf_get_option(0, "tabstop")
 
-local function getTabsAndText()
+local function mkHeader()
 
   local curLine = call("getline", {"."})
 
@@ -22,44 +18,49 @@ local function getTabsAndText()
 
     local spaces = string.sub(curLine, 1,i-1)
 
-    local tabs = #spaces/tabSize
+    local tabNr = #spaces/tabSize
 
-    return tabs, title
-  end
-end
-
-function M.NewHeader()
-
-  local tabs, title = getTabsAndText()
-
-  if tabs and title then
-
-    --Header symbols
-    local hSyms = "\\#\\#"
-
-    hSyms = hSyms..string.rep("\\#", tabs)
-
-    cmd("silent! !echo \""..hSyms..title.."\" >> Thoughts.md" )
-
-    M.GoToHeader()
-  end
-end
-
-
-function M.GoToHeader()
-
-  local tabs, title = getTabsAndText()
-
-  if tabs and title then
     --Header symbols
     local hSyms = "##"
-    hSyms = hSyms..string.rep("#", tabs)
 
-    local header = hSyms.."\\"..title
-    winFuncs.openWindow(ThoughtsBuf)
-    local match = vim.fn.search(header)
+    hSyms = hSyms..string.rep("#", tabNr)
 
-    cmd(""..match)
+    local header = hSyms..title
+
+    return header
+  else
+    error("Current line not starting with -")
   end
 end
+
+local function apndThoughts(newHeader)
+  local file = io.open(DocsPath.."/".."Thoughts.md","a")
+
+  if file then
+    file:write(newHeader)
+    file:flush()
+    file:close()
+  end
+end
+
+local function findHeader(header)
+  winFuncs.openWindow(ThoughtsBuf)
+  local match = vim.fn.search(header)
+  return match
+end
+
+function M.ToHeader()
+
+  if CSBuf == vim.api.nvim_get_current_buf() then
+    local header = mkHeader()
+    local match = findHeader(header)
+    if match == 0 then
+      apndThoughts(header)
+      cmd("e")
+      --Jump to header
+      findHeader(header)
+    end
+  end
+end
+
 return M
