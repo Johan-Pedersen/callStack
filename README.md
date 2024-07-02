@@ -2,10 +2,11 @@
 
 Nvim plugin for keeping track of tasks in a FIFO approach.
 
-"push" and "pop" tasks to the call stack as you get done with them.
-(Disclaimer: There are no push and pop methods, as it would be too restrictive )
+The idear is to keep a stack of tasks, where each task / sub-task can have corresponding notes.
 
-If you need to take some extra notes correlated to a task. Do so by making a corresponding header in **Thoughts.md** with \<nh\> and automatically jump to it.
+"push" and "pop" tasks to the call stack as you get done with them. (Disclaimer: There are no push and pop methods, as it would be too restrictive )
+
+If you need to take some extra notes correlated to a task. Do so by making a corresponding header in **Thoughts.md** with \<th\> and automatically jump to it.
 
 ## Keymaps
 
