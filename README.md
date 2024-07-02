@@ -1,6 +1,6 @@
 # CallStack
 
-Nvim plugin for keeping track of tasks in a FIFO approach.
+Todo list plugin for nvim to keep track of tasks in a FIFO approach.
 
 The idear is to keep a stack of tasks, where each task / sub-task can have corresponding notes.
 
