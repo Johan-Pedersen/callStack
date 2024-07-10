@@ -1,5 +1,7 @@
 # dogfooding
 
+- Tab er ikke spaces i filerne
+- Skriv i Readme, det er markdown filer
 - ToHeader laver 4 # og ikke 3, ved 1 tab-indryk
 - Naar man sletter et punkt, skal alle under punkter ogsaa slettes
     - Brug Treesitter til at finde den naeste nonindentet linje
