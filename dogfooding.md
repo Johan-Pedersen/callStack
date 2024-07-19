@@ -1,5 +1,7 @@
 # dogfooding
 
+- Brug den config defineret tab size
+- valg af tabsize skal nok fremgaa af readme
 - Tab er ikke spaces i filerne
 - Skriv i Readme, det er markdown filer
 - ToHeader laver 4 # og ikke 3, ved 1 tab-indryk
