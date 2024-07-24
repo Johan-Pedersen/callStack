@@ -1,5 +1,6 @@
 # dogfooding
 
+- Man kunne faktisk ret nemt bruge quickfix list el loc list. Som CallStack
 - Brug den config defineret tab size
 - valg af tabsize skal nok fremgaa af readme
 - Tab er ikke spaces i filerne
